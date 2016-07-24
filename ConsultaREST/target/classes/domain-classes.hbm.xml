@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+<hibernate-mapping>
+	<class name="cl.consulta.web.model.Register" table="clt_user">
+		<id name="userId" column="user_id" type="long">
+			<generator class="sequence">
+		     	<param name="sequence">seq_clt_user</param>
+			</generator>
+		</id>
+		<property name="login" column="login" type="string"/>
+		<property name="password" column="password" type="string"/>
+		<property name="lastPassword" column="last_password" type="string"/>
+		<property name="nickName" column="nick_name" type="string"/>
+		<property name="firstName" column="first_name" type="string"/>
+		<property name="secondName" column="second_name" type="string"/>
+		<property name="lastName" column="last_name" type="string"/>
+		<property name="secondSurname" column="second_surname" type="string"/>
+		<property name="gender" column="gender" type="integer"/>
+		<property name="birthdate" column="birthdate" type="date"/>
+		<property name="email" column="email" type="string"/>
+		<property name="phone" column="phone" type="string"/>
+		<property name="phoneWork" column="phone_work" type="string"/>
+		<property name="mobileNumber" column="mobile_number" type="string"/>
+		<property name="addressId" column="address_id" type="integer"/>
+	</class>	
+</hibernate-mapping>

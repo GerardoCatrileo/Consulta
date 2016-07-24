@@ -1,0 +1,63 @@
+<!DOCTYPE xml>
+<project name="Basic task" default="maven-install" basedir=".">
+	<description>Create Runnable War for Projec</description>
+
+	<xmlproperty file="pom.xml" prefix="pom" />
+	<property file="build.properties" />
+	<property name="packaging" value="${pom.project.packaging}" />
+	<property name="artifactId" value="${pom.project.artifactId}" />
+	<property name="version" value="${pom.project.version}" />
+	<property name="compile-path" value="target" />
+
+	<!--
+	<echo>${tomcat-home}</echo>
+	<echo>${artifactId}</echo>
+	<echo>${packaging}</echo>
+	-->
+
+	<target name="tomcat-start">
+
+		<copy file="target/${artifactId}-${version}.${packaging}" tofile="${tomcat-home}\webapps\${artifactId}.${packaging}"
+			overwrite="true" />
+
+		<exec executable="java" dir="${tomcat-home}">
+			<arg line="-cp bin\bootstrap.jar;bin\tomcat-juli.jar" />
+			<arg value="org.apache.catalina.startup.Bootstrap" />
+		</exec>
+	</target>
+
+	<target name="tomcat-stop">
+		<exec executable="java" dir="${tomcat-home}">
+			<arg line="-cp bin\bootstrap.jar;bin\tomcat-juli.jar" />
+			<arg value="org.apache.catalina.startup.Bootstrap" />
+			<arg line="stop" />
+		</exec>
+	</target>
+
+	<target name="tomcat-clean" depends="tomcat-stop">
+		<delete includeemptydirs="true">
+			<fileset dir="${tomcat-home}\webapps" />
+		</delete>
+	</target>
+
+	<target name="tomcat-restart" depends="tomcat-clean, tomcat-stop, tomcat-start">
+	</target>
+
+	<target name="maven-install" depends="maven-clean">
+		<exec dir="." executable="mvnw.cmd" failonerror="true" osfamily="windows">
+			<arg line="install" />
+		</exec>
+		<exec dir="." executable="mvnw.sh" failonerror="true" osfamily="unix">
+			<arg line="'install'" />
+		</exec>
+	</target>
+	<target name="maven-clean">
+		<exec dir="." executable="mvnw.cmd" failonerror="true" osfamily="windows">
+			<arg line="clean" />
+		</exec>
+		<exec dir="." executable="mvnw.sh" failonerror="true" osfamily="unix">
+			<arg line="'clean'" />
+		</exec>
+	</target>
+
+</project>
